@@ -3,7 +3,7 @@ import { writeFileSync } from "fs";
 
 type Parameter = {
   name: string;
-  type: string;
+  type: "string" | "boolean" | "integer" | "enum";
   default?: string;
 };
 
@@ -27,21 +27,54 @@ type Step = {
 type Command = {
   name: string;
   description?: string;
-  parameters: Parameter[];
+  parameters?: Parameter[];
+  steps: (CheckoutStep | RunStep | Step)[];
+};
+
+type Executor =
+  | {
+      name: string;
+    }
+  | {
+      type: "machine";
+      image: string; // TODO: Add specific images.
+      dockerLayerCaching?: boolean;
+    }
+  | {
+      type: "docker";
+      image: string;
+      name?: string;
+      entrypoint?: string | string[];
+      command?: string | string[];
+      user?: string;
+      environment?: Record<string, string | number | boolean>; // TODO
+      auth?: Record<string, string>; // TODO
+      awsAuth?: Record<string, string>; // TODO
+    }
+  | {
+      type: "windows";
+      // CHECKPOINT: https://circleci.com/docs/configuration-reference/
+    };
+
+type Job = {
+  name: string;
+  executor: Executor;
+  workingDirectory?: string;
   steps: (CheckoutStep | RunStep | Step)[];
 };
 
 type CircleCIConfig =
   | {
-      version: "2" | "2.0";
       setup?: boolean;
       commands: Command[];
     }
   | {
+      version: "2" | "2.0";
+    }
+  | {
       version: "2.1";
-      setup?: boolean;
-      orbs: Record<string, string>;
-      commands: Command[];
+      orbs?: Record<string, string>;
+      parameters?: Parameter[];
     };
 
 function run() {
@@ -51,10 +84,8 @@ function run() {
 
   const resultAsYaml = yaml.stringify(resultAsJson);
 
-  writeFileSync("./out/result.json", JSON.stringify(resultAsJson), {
-    flag: "w",
-  });
-  writeFileSync("./out/result.yaml", resultAsYaml, { flag: "a" });
+  writeFileSync("./out/result.json", JSON.stringify(resultAsJson));
+  writeFileSync("./out/result.yaml", resultAsYaml);
 }
 
 run();

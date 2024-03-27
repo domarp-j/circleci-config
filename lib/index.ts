@@ -1,19 +1,21 @@
-// TODO: CircleCI validation for testing: https://support.circleci.com/hc/en-us/articles/360006735753-How-to-validate-your-CircleCI-configuration
-// TODO: How to handle orbs?
+// CHECKPOINT: Researching a more code-first approach
+// Build a small code snippet and generate a YAML from it.
 
-/**
- * RESOURCES
- * https://circleci.com/docs/configuration-reference/#jobs
- * https://circleci.com/docs/reusing-config/#authoring-reusable-executors
- */
+const greeting = createCommand("greeting", {
+  parameters: {
+    to: {
+      type: "string",
+      default: "world",
+    },
+  },
+  steps: [run('echo "Hello <<to>>"')],
+});
 
-import { CircleCIConfig } from "./config";
+const myJob = createJob("my-job", {
+  executor: myDockerExecutor,
+  steps: [greeting({ to: "My-Name" })],
+});
 
-const sampleConfig: CircleCIConfig = {
-  jobs: [],
-  workflows: [],
-};
-
-export const generateJson = (config: CircleCIConfig) => {};
-
-export const generateYaml = (config: CircleCIConfig) => {};
+const myWorkflow = createWorkflow("my-workflow", {
+  jobs: [myJob],
+});

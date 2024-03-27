@@ -4,7 +4,7 @@ import { Job } from "./job";
 import { Parameter } from "./parameter";
 import { Workflow } from "./workflow";
 
-type CircleCIConfig = {
+export type CircleCIConfig = {
   version: "2.1";
   setup?: boolean;
   orbs?: Record<string, string>;

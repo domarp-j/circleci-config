@@ -7,6 +7,13 @@
  * https://circleci.com/docs/reusing-config/#authoring-reusable-executors
  */
 
-export { CircleCIConfig } from "./config";
+import { CircleCIConfig } from "./config";
 
-export const myTestFunc = (a: number, b: number) => a + b;
+const sampleConfig: CircleCIConfig = {
+  jobs: [],
+  workflows: [],
+};
+
+export const generateJson = (config: CircleCIConfig) => {};
+
+export const generateYaml = (config: CircleCIConfig) => {};

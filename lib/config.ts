@@ -5,10 +5,9 @@ import { Parameter } from "./parameter";
 import { Workflow } from "./workflow";
 
 export type CircleCIConfig = {
-  version: "2.1";
   setup?: boolean;
   orbs?: Record<string, string>;
-  commands: Command[];
+  commands?: Command[];
   parameters?: Parameter[];
   executors?: (DockerExecutor | MacOSExecutor | MachineExecutor)[];
   jobs: Job[];

@@ -5,13 +5,15 @@
   "main": "index.js",
   "scripts": {
     "build": "tsc",
-    "start": "ts-node lib/index.ts"
+    "start": "ts-node lib/index.ts",
+    "test": "vitest"
   },
   "author": "",
   "license": "ISC",
   "devDependencies": {
     "ts-node": "^10.9.2",
-    "typescript": "^5.4.2"
+    "typescript": "^5.4.2",
+    "vitest": "^1.4.0"
   },
   "dependencies": {
     "yaml": "^2.4.1"

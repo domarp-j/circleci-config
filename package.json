@@ -4,27 +4,16 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "build": "tsc src/index.ts",
-    "start": "ts-node src/index.ts",
-    "test": "ava"
+    "build": "tsc",
+    "start": "ts-node lib/index.ts"
   },
   "author": "",
   "license": "ISC",
   "devDependencies": {
-    "@ava/typescript": "^4.1.0",
-    "ava": "^6.1.2",
     "ts-node": "^10.9.2",
     "typescript": "^5.4.2"
   },
   "dependencies": {
     "yaml": "^2.4.1"
-  },
-  "ava": {
-    "typescript": {
-      "rewritePaths": {
-        "src/": "build/"
-      },
-      "compile": false
-    }
   }
 }
